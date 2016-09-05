@@ -1,6 +1,10 @@
 class ChildrenController < ApplicationController
   before_action :authenticate_user!
 
+  def home
+    render :home
+  end
+
   def index
     @children = Child.all
     respond_to do |format|
