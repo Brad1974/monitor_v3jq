@@ -5,5 +5,26 @@
 
     <ul class="roster"></ul>
 
+    <h3 class="top_banner">Class Statistics</h3>
+
+    <p class="top_banner"><span class='fake-link' id='stat-button'>Click here to reveal/hide statistics about our class</span></p>
+
+    <div class="class-stats">
+      <p> <%= Child.child_with_highest_ouch_rating%> </p>
+      <p> <%= Child.child_with_most_poops%> </p>
+	    <p> <%= Child.daily_biggest %></p>
+	    <p> <%= Child.child_with_most_kind_acts%></p>
+	    <p> <%= Child.child_who_received_most_kind_acts%></p>
+      <% if Child.send(:troublemakers).length > 0 %>
+      	<h4 class= "page-header text-center">Troublemakers List</h4>
+        <p> The following children all have engaged in bullying at least three times <p>
+        <ul>
+          <% Child.send(:troublemakers).each do |t| %>
+            <li><%= t.name %> was caught bullying <%= t.bully_rating %> times</li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
   </div>
 </div>

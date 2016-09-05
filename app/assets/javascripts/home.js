@@ -2,7 +2,7 @@ $(document).on("turbolinks:load", function(){
   loadRoster();
   loadProfile();
   deleteChild();
-  // loadStats();
+  loadStats();
   // loadReportIndex();
   // loadReport();
 
@@ -84,3 +84,10 @@ function deleteChild(){
     };
   });
 };
+
+function loadStats(){
+    $('.class-stats').hide();
+    $('#stat-button').on('click', function(){
+      $('.class-stats').toggle();
+    })
+  }
