@@ -19,6 +19,11 @@
  font-family: 'Playfair Display', serif;
 }
 
+.fake-link {
+    color: #337ab7;
+    cursor: pointer;
+}
+
 h1, h2, h3, h4, h5, h6 {
  font-family: 'Muli', sans-serif;
  font-weight: 300;
