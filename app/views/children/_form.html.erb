@@ -1,0 +1,29 @@
+<% if @child.errors.any? %>
+
+    <h5>
+        <%= pluralize(@child.errors.count, "error") %> prohibited this report from being saved:
+    </h5>
+
+    <ul>
+      <% @child.errors.each do |k, v| %>
+        <li><%= v %></li>
+      <% end %>
+    </ul>
+
+<% end %>
+
+<%= form_for @child do |f| %>
+<div class="col-md-8 col-md-offset-2">
+  <div class = "form-content"
+
+  <p><%= f.label :first_name %> <%=f.text_field :first_name %></p>
+  <p><%= f.label :last_name %> <%=f.text_field :last_name %></p>
+  <p><%= f.label :birthdate %> <%= f.date_select :birthdate %>
+  <p><%= f.label :diapers_inventory %> <%= f.text_field :diapers_inventory %></p>
+
+  <%= f.submit %>
+
+</div>
+</div>
+
+<% end %>

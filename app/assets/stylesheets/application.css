@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require 'bootstrap-sass'
+ */
+ body {
+ background-color: #fff;
+ font-family: 'Playfair Display', serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+ font-family: 'Muli', sans-serif;
+ font-weight: 300;
+}
+
+.top_banner {
+ text-align: center;
+}
+
+
+.navbar {
+ font-family: 'Muli', sans-serif;
+ text-transform: uppercase;
+ margin: 0 auto;
+}
+
+.nav_ul {
+     width: 100%;
+     padding: 15px;
+     margin: 0px auto 0px auto;
+     border-top: 2px solid #000;
+     border-bottom: 1px solid #000;
+     text-align: center;
+     display: inline-block;
+     list-style-type: none;
+  }
+
+.nav_ul li {
+     display: inline;
+     margin: 0px 3px;
+     padding: 15px;
+   }
+
+.main-content {
+ box-sizing: border-box;
+ background-color: #383838;
+ padding: 2.0em 1.5em;
+ border-bottom: 4px solid #0a8fd5;
+ color: #cccccc;
+ font-family: 'Muli', sans-serif;
+ font-weight: 300;
+ }
+
+ .form-content {
+   box-sizing: border-box;
+   background-color: #d9d9d9;
+   padding: 2.0em 1.5em;
+   border: 4px solid #0a8fd5;
+   color: #000000;
+   font-family: 'Muli', sans-serif;
+   font-weight: 300;
+   }
+
+
+.field_with_errors {
+ color: red;
+}
+ .loginform {
+   width: 50%;
+   margin: auto;
+ }

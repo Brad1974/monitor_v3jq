@@ -1,0 +1,48 @@
+<% if @daily_report.errors.any? %>
+    <h4>
+        Some errors prohibited this report from being saved:
+    </h4>
+
+    <% @daily_report.errors.each do |k,v| %>
+      <% if !v.include?("invalid") %>
+        <li><%= v %></li>
+      <% end %>
+    <% end %>
+
+    <% if @daily_report.kind_acts.any? && @daily_report.kind_acts.last.errors.any? %>
+      <% @daily_report.kind_acts.last.errors.each do |k,v| %>
+        <% if !v.include?("exist") %>
+          <li><%= v %></li>
+        <% end %>
+      <% end %>
+    <% end %>
+
+<% end %>
+
+<%= form_for [@child, @daily_report] do |f| %>
+
+<div class="col-md-8 col-md-offset-2">
+  <div class = "form-content"
+
+  <p><%= f.label :date %> <%= f.date_select :date, { :start_year => Time.now.year, :end_year => Time.now.year} %></p>
+  <p><%= f.label :wet_diapers %> <%= f.select :wet_diapers, ((0..10).map {|i| [i,i] }) %></p>
+  <p><%= f.label :poopy_diapers %> <%= f.select :poopy_diapers, ((0..10).map {|i| [i,i] }) %></p>
+  <p><%= f.label "Any bullying today?" %><%= f.check_box :bullying_incident %>
+  <p><%= f.label :bullying_report %></br><%= f.text_area :bullying_report %></p>
+  <p><%= f.label "Any ouches today?" %><%= f.check_box :ouch_incident %>
+  <p><%= f.label :ouch_report %></br><%= f.text_area :ouch_report %></p>
+
+  <label> Kind Acts </label></br>
+
+  <%= f.fields_for :kind_acts, @kind_act do |ka| %>
+    <%= ka.hidden_field :giver_id %>
+    <%= ka.label "Any kind acts performed?" %></br>
+    <%= ka.text_area :act %></br>
+    <%= ka.label "Who was the recipient of the kind act?" %>
+    <%= ka.collection_select :recipient_id, Child.all.reject{|c| c == @child}, :id, :name, include_blank: 'Choose a child' %>
+  <% end %>
+
+  <%= f.submit %>
+</div>
+</div>
+<% end %>

@@ -1,0 +1,38 @@
+<h3 class ="top_banner">Daily Report for <%= @daily_report.child.name %></h3>
+<div class="col-md-8 col-md-offset-2">
+<div class="main-content">
+
+<p><b>Date:</b> <%= format_date(@daily_report.date) %></p>
+<p><b>Diaper Changes:</b> </p>
+<ul>
+  <li>Wet diapers: <%= @daily_report.wet_diapers %></li>
+  <li>Poopy diapers: <%= @daily_report.poopy_diapers %></li>
+</ul>
+
+<% if @daily_report.bullying_incident %>
+	<p><b>Bullying Incident:</b></p>
+	<ul>
+		<li><%= @daily_report.bullying_report %></li>
+	</ul>
+<% end %>
+
+<% if @daily_report.ouch_incident %>
+	<p><b>Ouch Report:</b></p>
+	<ul>
+		<li><%= @daily_report.ouch_report %></li>
+	</ul>
+<% end %>
+
+<% if @daily_report.kind_acts.count > 0 %>
+	<p><b>Act of Kindness!</b></p>
+	<ul>
+	   <li><%= @daily_report.kind_acts.last.act %></li>
+	</ul>
+<% end %>
+
+<%= link_to "edit report", edit_child_daily_report_path(@child, @daily_report) %></br>
+<%= link_to "delete report", child_daily_report_path(@child, @daily_report), method: :delete, data: { confirm: "Are you sure?"} %></br>
+<%= link_to "Back to #{@child.name}'s profile", child_path(@child) %></p>
+
+</div>
+</div>

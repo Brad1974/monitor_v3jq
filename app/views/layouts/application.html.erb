@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MonitorV3</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container"</div>
+    <div class="top_banner"><h1>Montessori Monitor</h1></div>
+    <% if user_signed_in? %>
+      <div class="navbar">
+        <ul class = "nav_ul">
+          <li><%= link_to "Child Roster", children_path %></li>
+          <li><%= link_to "register new child", new_child_path %></li>
+          <li><%= link_to "sign out", destroy_user_session_path, method: "delete"  %></li>
+        </ul>
+      </div>
+      <p class="text-center" style="color:brown">signed in as: <%= current_user.email %></p>
+    <% end %>
+    <p class="alert"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <%= yield %>
+
+  </body>
+</html>

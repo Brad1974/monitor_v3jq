@@ -1,0 +1,28 @@
+<h3 class="top_banner"><%=@child.name%>'s Profile Page</h3>
+<div class="col-md-8 col-md-offset-2">
+	<div class="main-content">
+
+<p>Birthdate <%= format_date(@child.birthdate) %></p>
+<p>Bully Rating: <%=@child.bully_rating ||= "0" %></p>
+<p>Ouch Rating: <%=@child.ouch_rating ||= "0" %></p>
+<p>Observed Performing Acts of Kindness: <%=@child.kind_acts.count %> times</p>
+<p>Observed Receiving Acts of Kindness: <%=@child.gifts.count %> times</p>
+<p>Current Diaper Inventory: <%= @child.diapers_inventory %></p>
+
+<%= link_to "edit profile", edit_child_path(@child) %>
+<%= link_to "delete profile", child_path(@child), method: :delete, data: { confirm: "Are you sure?"} %></br></br>
+
+<h4 class="page-header text-center"><%=@child.name%>'s Daily Reports</h4>
+
+<% if @child.daily_reports.empty? %>
+  <p> There are none yet </p>
+
+<% else %>
+  <% @child.daily_reports.each do |d| %>
+    <li><%= link_to format_date(d.date), child_daily_report_path(@child, d) %></li>
+  <% end %>
+<% end %>
+</br>
+<p class="page-header"></p><%= link_to "Create a new report", new_child_daily_report_path(@child) %>
+</div>
+</div>

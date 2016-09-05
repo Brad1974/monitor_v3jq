@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2016-09-04
+  poopy_diapers: 1
+  wet_diapers: 1
+  bullying_report: MyText
+  ouch_report: MyText
+  child_id: 1
+  bullying_incident: false
+  ouch_incident: false
+
+two:
+  date: 2016-09-04
+  poopy_diapers: 1
+  wet_diapers: 1
+  bullying_report: MyText
+  ouch_report: MyText
+  child_id: 1
+  bullying_incident: false
+  ouch_incident: false

@@ -1,0 +1,40 @@
+<h3 class="top_banner">Roster</h3>
+<div class="col-md-8 col-md-offset-2">
+	<div class="main-content">
+
+<% if @children.count > 0 %>
+  <ul>
+	  <% @children.each do |c| %>
+	    <li><%= link_to c.name, child_path(c) %></li>
+	  <% end %>
+  </ul>
+  <h4 class="page-header text-center">Class Stats</h4>
+
+    <p> <%= Child.child_with_highest_ouch_rating%> </p>
+    <p> <%= Child.child_with_most_poops%> </p>
+    <p> <%= Child.daily_biggest %></p>
+    <p> <%= Child.child_with_most_kind_acts%></p>
+    <p> <%= Child.child_who_received_most_kind_acts%></p>
+
+
+<% else %>
+	<p>There are no children registered yet</p>
+<% end %>
+
+
+<% if Child.send(:troublemakers).length > 0 %>
+
+
+
+	<h4 class= "page-header text-center">Troublemakers List</h4>
+
+
+    <p> The following children all have engaged in bullying at least three times: <p>
+<ul>
+	<% Child.send(:troublemakers).each do |t| %>
+		<li><%= t.name %> was caught bullying <%= t.bully_rating %> times</li>
+	<% end %>
+</ul>
+</div>
+</div>
+<%end%>
