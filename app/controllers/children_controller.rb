@@ -3,7 +3,12 @@ class ChildrenController < ApplicationController
 
   def index
     @children = Child.all
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @children }
+    end
   end
+
 
   def show
     @child = Child.find(params[:id])
