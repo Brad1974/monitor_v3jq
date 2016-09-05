@@ -16,6 +16,10 @@ class ChildrenController < ApplicationController
 
   def show
     @child = Child.find(params[:id])
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @child }
+    end
   end
 
   def new

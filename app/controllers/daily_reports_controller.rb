@@ -6,7 +6,11 @@ class DailyReportsController < ApplicationController
   end
 
   def index
-    redirect_to child_path(@child)
+    @daily_reports = @child.daily_reports
+    respond_to do |format|
+      format.html { redirect_to child_path(@child)}
+      format.json { render json: @daily_reports }
+    end
   end
 
   def new
