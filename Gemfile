@@ -30,6 +30,7 @@ gem 'devise'
 gem 'omniauth-github'
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 gem 'pry'
+gem 'active_model_serializers'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
