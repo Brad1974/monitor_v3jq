@@ -20,6 +20,11 @@ class Child < ApplicationRecord
     self.first_name + " " +self.last_name
   end
 
+  def revise_child_stats(old, new_one)
+    remove_child_stats(old)
+    update_child_stats(new_one)
+  end
+
   def update_child_stats(dailyreport)
     self.diapers_inventory -= dailyreport.total_daily_diapers
     self.bully_rating += dailyreport.bullying_today
@@ -27,11 +32,10 @@ class Child < ApplicationRecord
     self.save
   end
 
-  def remove_stats(report)
-    self.diapers_inventory += report.total_daily_diapers
-    self.bully_rating -= report.bullying_today
-    self.ouch_rating -= report.ouches_today
-    self.save
+  def remove_child_stats(old)
+    self.diapers_inventory += old.total_daily_diapers
+    self.bully_rating -= old.bullying_today
+    self.ouch_rating -= old.ouches_today
   end
 
   def self.child_with_highest_ouch_rating

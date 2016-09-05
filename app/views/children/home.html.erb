@@ -5,8 +5,10 @@
 
     <ul class="roster"></ul>
 
-    <h3 class="top_banner">Class Statistics</h3>
 
+
+<% if !DailyReport.all.empty? %>
+<h3 class="top_banner">Class Statistics</h3>
     <p class="top_banner"><span class='fake-link' id='stat-button'>Click here to reveal/hide statistics about our class</span></p>
 
     <div class="class-stats">
@@ -25,6 +27,7 @@
         </ul>
       <% end %>
     </div>
+<% end %>
 
   </div>
 </div>

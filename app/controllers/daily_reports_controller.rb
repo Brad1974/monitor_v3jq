@@ -20,6 +20,7 @@ class DailyReportsController < ApplicationController
 
   def create
     @daily_report = @child.daily_reports.build(daily_report_params)
+    @kind_act = @daily_report.kind_acts.last
     if @daily_report.save
       @child.update_child_stats(@daily_report)
       redirect_to child_daily_report_path(@child, @daily_report), notice: "report generated"
@@ -34,11 +35,16 @@ class DailyReportsController < ApplicationController
   end
 
   def update
+    # I know it's ugly, sorry!
     @daily_report = @child.daily_reports.find(params[:id])
+    @kind_act = @daily_report.kind_acts.last
     copy = @daily_report.deep_dup
     if @daily_report.update(daily_report_params)
-      @child.remove_stats(copy)
-      @child.update_child_stats(@daily_report)
+      @child.revise_child_stats(copy, @daily_report)
+      if @daily_report.kind_acts.last != nil && (params[:daily_report][:kind_acts_attributes]["0"]["act"] == "") && (params[:daily_report][:kind_acts_attributes]["0"]["recipient_id"] == "")
+        @daily_report.kind_acts.last.destroy
+      end
+      @daily_report.save
       redirect_to child_daily_report_path(@child, @daily_report), notice: "report updated"
     else
       render :edit
@@ -49,7 +55,7 @@ class DailyReportsController < ApplicationController
     @daily_report = @child.daily_reports.find(params[:id])
     copy = @daily_report.deep_dup
     @daily_report.destroy
-    @child.remove_stats(copy)
+    @child.remove_child_stats(copy)
     redirect_to root_path
   end
 
