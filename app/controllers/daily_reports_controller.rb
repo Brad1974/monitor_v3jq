@@ -23,7 +23,7 @@ class DailyReportsController < ApplicationController
     @kind_act = @daily_report.kind_acts.last
     if @daily_report.save
       @child.update_child_stats(@daily_report)
-      redirect_to child_daily_report_path(@child, @daily_report), notice: "report generated"
+      redirect_to root_path, notice: "report generated for #{@child.name}"
     else
       render :new
     end
@@ -45,7 +45,7 @@ class DailyReportsController < ApplicationController
         @daily_report.kind_acts.last.destroy
       end
       @daily_report.save
-      redirect_to child_daily_report_path(@child, @daily_report), notice: "report updated"
+      redirect_to root_path, notice: "report updated for #{@child.name}"
     else
       render :edit
     end
