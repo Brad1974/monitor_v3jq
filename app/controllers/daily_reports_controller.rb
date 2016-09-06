@@ -63,7 +63,9 @@ class DailyReportsController < ApplicationController
     @daily_report = @child.daily_reports.find(params[:id])
     copy = @daily_report.deep_dup
     @daily_report.destroy
+    binding.pry
     @child.remove_child_stats(copy)
+    binding.pry
     redirect_to root_path
   end
 

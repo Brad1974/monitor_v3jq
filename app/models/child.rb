@@ -33,9 +33,12 @@ class Child < ApplicationRecord
   end
 
   def remove_child_stats(old)
+    binding.pry
     self.diapers_inventory += old.total_daily_diapers
     self.bully_rating -= old.bullying_today
     self.ouch_rating -= old.ouches_today
+    self.save
+    binding.pry
   end
 
   def self.child_with_highest_ouch_rating
