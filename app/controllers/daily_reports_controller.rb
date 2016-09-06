@@ -3,6 +3,10 @@ class DailyReportsController < ApplicationController
 
   def show
     @daily_report = @child.daily_reports.find(params[:id])
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @daily_report}
+    end
   end
 
   def index
@@ -31,7 +35,11 @@ class DailyReportsController < ApplicationController
 
   def edit
     @daily_report = @child.daily_reports.find(params[:id])
-    @kind_act = @child.kind_acts[0]
+    if !@child.kind_acts.empty?
+      @kind_act = @child.kind_acts[0]
+    else
+      @daily_report.kind_acts.build(giver_id: @child.id)
+    end
   end
 
   def update

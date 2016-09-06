@@ -4,7 +4,7 @@ $(document).on("turbolinks:load", function(){
   deleteChild();
   loadStats();
   loadReportIndex();
-  // loadReport();
+  loadReport();
 
 });
   // children ajax functions
@@ -109,4 +109,51 @@ function loadReportIndex(){
       else {$('.report-area[data-details=' + dataId +']').html("");};
     })
   })
+}
+
+function loadReport(){
+  $('.roster').on('click', 'a.target', function(e){
+    e.preventDefault();
+    var newReport = $(this).closest('div')
+    var url = $(this).attr('href')
+    $.getJSON({url: url, locator: newReport}, function(data){})
+    .done(buildDailyReport);
+  });
+};
+
+
+function buildDailyReport(data){
+  var locator = this.locator
+  var report = new DailyReport(data.child_id, data.date, data.poopy_diapers, data.wet_diapers, data.bullying_report, data.ouch_report, data.kind_acts, data.observations);
+  report.insertIntoPage(locator);
+}
+
+
+function DailyReport(child_id, date, poopy_diapers, wet_diapers, bullying_report, ouch_report, kind_acts, observation){
+  this.date = date;
+  this.poopy_diapers = poopy_diapers;
+  this.wet_diapers = wet_diapers;
+  this.bullying_report = bullying_report;
+  this.ouch_report = ouch_report;
+  this.child_id = child_id;
+  this.kind_acts = kind_acts;
+  this.observation = observation;
+}
+
+
+DailyReport.prototype.insertIntoPage = function(locator){
+  var lineZero = "</br><hr><p> Date: " + this.date + "</p> ";
+  var lineOne = "<p> Diaper Changes:</p><ul> ";
+  var lineTwo = "<li> Wet Diapers: " + this.wet_diapers + "</li> ";
+  var lineThree = "<li> Poopy Diapers: " + this.poopy_diapers + "</li></ul></br> ";
+  if (this.bullying_report.length > 0) {
+    var lineFour = "<p> Your child was a bully today: " + this.bullying_report + "</p> "} else {var lineFour = ""};
+  if (this.ouch_report.length > 0) {
+    var lineFive = "<p> Your child got an ouchie today: " + this.ouch_report + "</p>"} else {var lineFive = ""};
+  if (this.kind_acts.length > 0) {
+    var lineSix = "<p> We observed your child do something kind today: " + this.kind_acts[0].act + "</p>"} else {var lineSix = ""};
+  var template ="<div class='report'>" + lineZero + lineOne + lineTwo + lineThree + lineFour + lineFive + lineSix +"<hr></br></div>";
+  if ($(locator).find('p').length === 0) {
+    $(locator).append(template);}
+  else {$(locator).find('.report').remove() }
 }
