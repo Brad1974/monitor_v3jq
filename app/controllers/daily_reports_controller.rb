@@ -27,7 +27,7 @@ class DailyReportsController < ApplicationController
     @kind_act = @daily_report.kind_acts.last
     if @daily_report.save
       @child.update_child_stats(@daily_report)
-      redirect_to root_path, notice: "report generated for #{@child.name}"
+      redirect_to child_daily_report_path(@child, @daily_report), notice: "report generated"
     else
       render :new
     end
@@ -49,11 +49,11 @@ class DailyReportsController < ApplicationController
     copy = @daily_report.deep_dup
     if @daily_report.update(daily_report_params)
       @child.revise_child_stats(copy, @daily_report)
-      if @daily_report.kind_acts.last != nil && (params[:daily_report][:kind_acts_attributes]["0"]["act"] == "") && (params[:daily_report][:kind_acts_attributes]["0"]["recipient_id"] == "")
-        @daily_report.kind_acts.last.destroy
+      if (@daily_report.kind_acts.last != nil && (params[:daily_report][:kind_acts_attributes]["0"]["act"] == "") && (params[:daily_report][:kind_acts_attributes]["0"]["recipient_id"] == "")) || @daily_report.kind_acts.count > 1
+        @daily_report.kind_acts.first.destroy
       end
       @daily_report.save
-      redirect_to root_path, notice: "report updated for #{@child.name}"
+      redirect_to child_daily_report_path(@child, @daily_report), notice: "report updated"
     else
       render :edit
     end

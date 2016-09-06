@@ -5,6 +5,7 @@ $(document).on("turbolinks:load", function(){
   loadStats();
   loadReportIndex();
   loadReport();
+  deleteReport();
 
 });
   // children ajax functions
@@ -124,20 +125,22 @@ function loadReport(){
 
 function buildDailyReport(data){
   var locator = this.locator
-  var report = new DailyReport(data.child_id, data.date, data.poopy_diapers, data.wet_diapers, data.bullying_report, data.ouch_report, data.kind_acts, data.observations);
+
+  var report = new DailyReport(data.id, data.child_id, data.date, data.poopy_diapers, data.wet_diapers, data.bullying_report, data.ouch_report, data.kind_acts);
+
   report.insertIntoPage(locator);
 }
 
 
-function DailyReport(child_id, date, poopy_diapers, wet_diapers, bullying_report, ouch_report, kind_acts, observation){
+function DailyReport(id, child_id, date, poopy_diapers, wet_diapers, bullying_report, ouch_report, kind_acts){
+  this.id = id;
+  this.child_id = child_id;
   this.date = date;
   this.poopy_diapers = poopy_diapers;
   this.wet_diapers = wet_diapers;
   this.bullying_report = bullying_report;
   this.ouch_report = ouch_report;
-  this.child_id = child_id;
   this.kind_acts = kind_acts;
-  this.observation = observation;
 }
 
 
@@ -152,8 +155,24 @@ DailyReport.prototype.insertIntoPage = function(locator){
     var lineFive = "<p> Your child got an ouchie today: " + this.ouch_report + "</p>"} else {var lineFive = ""};
   if (this.kind_acts.length > 0) {
     var lineSix = "<p> We observed your child do something kind today: " + this.kind_acts[0].act + "</p>"} else {var lineSix = ""};
-  var template ="<div class='report'>" + lineZero + lineOne + lineTwo + lineThree + lineFour + lineFive + lineSix +"<hr></br></div>";
+  var editLink = "<p><a href='/children/" + this.child_id + "/daily_reports/" + this.id + "/edit'>edit report</a> - "
+  var deleteLink = "<span class='fake-link' id='delete-report' data-child_id='" + this.child_id + "' data-id='" + this.id +"'>delete report</span></p>"
+  var template ="<div class='report'>" + lineZero + lineOne + lineTwo + lineThree + lineFour + lineFive + lineSix + editLink + deleteLink + "<hr></br></div>";
   if ($(locator).find('p').length === 0) {
     $(locator).append(template);}
   else {$(locator).find('.report').remove() }
 }
+
+function deleteReport(){
+  $('.roster').on('click', 'span#delete-report', function(event){
+    var choice = confirm('Do you really want to delete this record?');
+    if(choice === true) {
+      event.stopPropagation();
+      var url = "/children/" + $(this).data('child_id') + "/daily_reports/" + $(this).data('id')
+      $.ajax({url: url, type: "DELETE"})
+      .done(function(success){
+        $('div [data-details=' +success.id +']').parent().remove()
+      });
+    };
+  });
+};
