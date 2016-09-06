@@ -29,7 +29,7 @@ class ChildrenController < ApplicationController
   def create
     @child = Child.new(child_params)
     if @child.save
-      redirect_to root_path
+      redirect_to root_path, notice: "profile created for #{@child.name}"
     else
       render :new
     end
@@ -42,7 +42,7 @@ class ChildrenController < ApplicationController
   def update
     @child = Child.find(params[:id])
     if @child.update(child_params)
-      redirect_to root_path
+      redirect_to root_path, notice: "profile updated for #{@child.name}"
     else
       render :edit
     end

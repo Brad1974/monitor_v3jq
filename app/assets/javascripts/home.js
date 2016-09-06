@@ -3,7 +3,7 @@ $(document).on("turbolinks:load", function(){
   loadProfile();
   deleteChild();
   loadStats();
-  // loadReportIndex();
+  loadReportIndex();
   // loadReport();
 
 });
@@ -91,3 +91,22 @@ function loadStats(){
       $('.class-stats').toggle();
     })
   }
+
+// daily report ajax functions
+
+function loadReportIndex(){
+  $('.roster').on('click', 'span#loadIndex', function(event){
+    var url = "/children/" + $(this).data('details') + "/daily_reports.json"
+    $.getJSON(url, function(data){
+      var reportList = "";
+      var dataId = data[0].child_id;
+      data.forEach(function(details) {
+        var dailyReport = "<div class='dr><li class='rl'><a class='target' href= '/children/" + details.child_id + "/daily_reports/" + details.id + "'>" + details.date + "</a></li></div> ";
+        reportList += dailyReport;
+      })
+      if ($('.report-area[data-details=' + dataId +']').children().length === 0) {
+      $('.report-area[data-details=' + dataId +']').html(reportList);}
+      else {$('.report-area[data-details=' + dataId +']').html("");};
+    })
+  })
+}
